@@ -1,0 +1,45 @@
+# Netlify configuration for static site deployment
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Cache settings
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+# More aggressive caching for static assets
+[[headers]]
+  for = "/styles.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "/docs.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+
+# Security headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Build settings
+[build]
+  base = ""
+  command = "echo 'No build required for static site'"
+  publish = "src"
+
+[build.environment]
+  NODE_VERSION = "16"
+
+# Function settings (optional, for future use)
+# [functions]
+#   directory = "functions"

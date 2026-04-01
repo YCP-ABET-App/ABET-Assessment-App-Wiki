@@ -1,0 +1,39 @@
+{
+  "name": "ABET Assessment Documentation",
+  "description": "Static documentation website for the ABET Assessment Application",
+  "version": "1.0.0",
+  "author": "Your Organization",
+  "homepage": "https://abet-assessment.institution.edu",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/abet-assessment-app-wiki.git"
+  },
+  "keywords": [
+    "documentation",
+    "static-site",
+    "abet",
+    "assessment",
+    "web-application"
+  ],
+  "scripts": {
+    "start": "http-server src -p 8000",
+    "serve": "http-server src",
+    "build": "echo 'This is a static site. No build needed.'",
+    "test": "echo 'No tests configured'"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "browserslist": [
+    "> 0.5%",
+    "last 2 versions",
+    "Firefox ESR",
+    "not dead"
+  ],
+  "author_info": {
+    "name": "Your Name",
+    "email": "your-email@institution.edu",
+    "organization": "Your Organization"
+  }
+}

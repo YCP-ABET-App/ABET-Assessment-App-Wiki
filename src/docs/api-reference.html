@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Reference - ABET Assessment Application</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../docs.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h1>ABET Assessment</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../index.html#overview">Overview</a></li>
+                <li><a href="../index.html#docs">Docs</a></li>
+                <li><a href="../index.html#faq">FAQ</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="breadcrumb">
+        <div class="container">
+            <a href="../index.html">Home</a> / <span>API Reference</span>
+        </div>
+    </div>
+
+    <main class="doc-content">
+        <div class="container">
+            <article>
+                <h1>API Reference</h1>
+
+                <section>
+                    <h2>Overview</h2>
+                    <p>The ABET Assessment Application provides a RESTful API for integrating with external systems. The API uses JSON for request and response payloads.</p>
+                </section>
+
+                <section>
+                    <h2>Authentication</h2>
+                    <p>All API requests require authentication using a bearer token. Include your token in the Authorization header:</p>
+                    <pre><code>Authorization: Bearer YOUR_API_TOKEN</code></pre>
+                    <p>To obtain an API token, contact your system administrator.</p>
+                </section>
+
+                <section>
+                    <h2>Base URL</h2>
+                    <pre><code>https://api.abet-assessment.edu/v1</code></pre>
+                </section>
+
+                <section>
+                    <h2>Endpoints</h2>
+
+                    <h3>Assessments</h3>
+                    <div class="api-endpoint">
+                        <h4>GET /assessments</h4>
+                        <p>Retrieve a list of assessments</p>
+                        <p><strong>Query Parameters:</strong></p>
+                        <ul>
+                            <li>program_id (optional): Filter by program</li>
+                            <li>year (optional): Filter by academic year</li>
+                            <li>limit (optional): Number of results to return (default: 20)</li>
+                            <li>offset (optional): Pagination offset (default: 0)</li>
+                        </ul>
+                        <p><strong>Response:</strong></p>
+                        <pre><code>{
+  "data": [
+    {
+      "id": "1",
+      "program_name": "Computer Science",
+      "year": 2026,
+      "status": "active",
+      "created_at": "2026-01-15"
+    }
+  ],
+  "total": 1,
+  "limit": 20,
+  "offset": 0
+}</code></pre>
+                    </div>
+
+                    <div class="api-endpoint">
+                        <h4>GET /assessments/{id}</h4>
+                        <p>Retrieve a specific assessment</p>
+                        <p><strong>Parameters:</strong></p>
+                        <ul>
+                            <li>id (required): Assessment ID</li>
+                        </ul>
+                        <p><strong>Response:</strong></p>
+                        <pre><code>{
+  "id": "1",
+  "program_name": "Computer Science",
+  "year": 2026,
+  "description": "Assessment data for 2026",
+  "status": "active",
+  "created_at": "2026-01-15",
+  "updated_at": "2026-03-01"
+}</code></pre>
+                    </div>
+
+                    <h3>Program Outcomes</h3>
+                    <div class="api-endpoint">
+                        <h4>GET /assessments/{id}/outcomes</h4>
+                        <p>Retrieve program outcomes for an assessment</p>
+                        <p><strong>Response:</strong></p>
+                        <pre><code>{
+  "data": [
+    {
+      "id": "101",
+      "assessment_id": "1",
+      "description": "Students will understand core algorithms",
+      "type": "knowledge",
+      "created_at": "2026-01-15"
+    }
+  ]
+}</code></pre>
+                    </div>
+
+                    <div class="api-endpoint">
+                        <h4>POST /assessments/{id}/outcomes</h4>
+                        <p>Create a new program outcome</p>
+                        <p><strong>Request Body:</strong></p>
+                        <pre><code>{
+  "description": "Students will apply design patterns",
+  "type": "skill"
+}</code></pre>
+                        <p><strong>Response:</strong></p>
+                        <pre><code>{
+  "id": "102",
+  "assessment_id": "1",
+  "description": "Students will apply design patterns",
+  "type": "skill",
+  "created_at": "2026-03-01"
+}</code></pre>
+                    </div>
+
+                    <h3>Student Data</h3>
+                    <div class="api-endpoint">
+                        <h4>POST /assessments/{id}/student-data</h4>
+                        <p>Submit student performance data</p>
+                        <p><strong>Request Body:</strong></p>
+                        <pre><code>{
+  "student_id": "STU001",
+  "outcome_id": "101",
+  "performance_rating": 4,
+  "notes": "Demonstrated excellent understanding"
+}</code></pre>
+                        <p><strong>Response:</strong></p>
+                        <pre><code>{
+  "id": "DATA001",
+  "assessment_id": "1",
+  "student_id": "STU001",
+  "outcome_id": "101",
+  "performance_rating": 4,
+  "notes": "Demonstrated excellent understanding",
+  "created_at": "2026-03-01"
+}</code></pre>
+                    </div>
+
+                    <h3>Reports</h3>
+                    <div class="api-endpoint">
+                        <h4>GET /assessments/{id}/report</h4>
+                        <p>Generate a report for an assessment</p>
+                        <p><strong>Query Parameters:</strong></p>
+                        <ul>
+                            <li>format: csv, json, or pdf (default: json)</li>
+                        </ul>
+                        <p><strong>Response:</strong> Report data in requested format</p>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Error Handling</h2>
+                    <p>The API uses standard HTTP status codes:</p>
+                    <ul>
+                        <li><strong>200 OK:</strong> Successful request</li>
+                        <li><strong>201 Created:</strong> Resource successfully created</li>
+                        <li><strong>400 Bad Request:</strong> Invalid request parameters</li>
+                        <li><strong>401 Unauthorized:</strong> Missing or invalid authentication</li>
+                        <li><strong>404 Not Found:</strong> Resource not found</li>
+                        <li><strong>500 Internal Server Error:</strong> Server error</li>
+                    </ul>
+                    <p>Error responses include a message and error code:</p>
+                    <pre><code>{
+  "error": {
+    "code": "INVALID_OUTCOME_ID",
+    "message": "The specified outcome does not exist"
+  }
+}</code></pre>
+                </section>
+
+                <section>
+                    <h2>Rate Limiting</h2>
+                    <p>API requests are rate-limited to 1000 requests per hour per token. The response headers include:</p>
+                    <ul>
+                        <li>X-RateLimit-Limit: Maximum requests per hour</li>
+                        <li>X-RateLimit-Remaining: Remaining requests in current hour</li>
+                        <li>X-RateLimit-Reset: Unix timestamp of rate limit reset</li>
+                    </ul>
+                </section>
+
+                <section class="nav-links-section">
+                    <a href="user-guide.html" class="prev-link">← Previous: User Guide</a>
+                    <a href="deployment.html" class="next-link">Next: Deployment Guide →</a>
+                </section>
+            </article>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 ABET Assessment Application. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="../index.html">Home</a>
+                <a href="../index.html#docs">Documentation</a>
+                <a href="../index.html#faq">FAQ</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

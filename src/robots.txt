@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://abet-assessment.institution.edu/sitemap.xml
+
+# Block search engines from crawling admin pages (if needed)
+# User-agent: *
+# Disallow: /admin/
+
+# Set crawl delay to avoid overloading the server
+# Crawl-delay: 1

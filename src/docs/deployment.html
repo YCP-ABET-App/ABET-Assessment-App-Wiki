@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deployment Guide - ABET Assessment Application</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../docs.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h1>ABET Assessment</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../index.html#overview">Overview</a></li>
+                <li><a href="../index.html#docs">Docs</a></li>
+                <li><a href="../index.html#faq">FAQ</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="breadcrumb">
+        <div class="container">
+            <a href="../index.html">Home</a> / <span>Deployment Guide</span>
+        </div>
+    </div>
+
+    <main class="doc-content">
+        <div class="container">
+            <article>
+                <h1>Deployment Guide</h1>
+
+                <section>
+                    <h2>Overview</h2>
+                    <p>This guide covers the deployment process for the ABET Assessment Application. The application can be deployed to various environments including development, staging, and production.</p>
+                </section>
+
+                <section>
+                    <h2>System Requirements</h2>
+
+                    <h3>Server Requirements</h3>
+                    <ul>
+                        <li>Operating System: Linux (Ubuntu 20.04+), Windows Server 2019+, or macOS</li>
+                        <li>CPU: Minimum 2 cores (4 cores recommended for production)</li>
+                        <li>RAM: Minimum 4GB (8GB recommended for production)</li>
+                        <li>Storage: Minimum 10GB free space</li>
+                    </ul>
+
+                    <h3>Software Requirements</h3>
+                    <ul>
+                        <li>Node.js v16.x or higher</li>
+                        <li>NPM v8.x or higher</li>
+                        <li>PostgreSQL 12.x or higher (for database)</li>
+                        <li>Redis 6.x or higher (for caching)</li>
+                        <li>Docker (optional, for containerized deployment)</li>
+                    </ul>
+
+                    <h3>Network Requirements</h3>
+                    <ul>
+                        <li>Open port 443 for HTTPS</li>
+                        <li>SSL/TLS certificate (required for production)</li>
+                        <li>Firewall rules configured for database and Redis access</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Installation Steps</h2>
+
+                    <h3>1. Prepare the Server</h3>
+                    <ol>
+                        <li>Update system packages:
+                            <pre><code>sudo apt update && sudo apt upgrade</code></pre>
+                        </li>
+                        <li>Install Node.js and NPM:
+                            <pre><code>curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+sudo apt-get install -y nodejs</code></pre>
+                        </li>
+                        <li>Install PostgreSQL:
+                            <pre><code>sudo apt install postgresql postgresql-contrib</code></pre>
+                        </li>
+                        <li>Install Redis:
+                            <pre><code>sudo apt install redis-server</code></pre>
+                        </li>
+                    </ol>
+
+                    <h3>2. Clone the Repository</h3>
+                    <pre><code>git clone https://github.com/your-org/abet-assessment-app.git
+cd abet-assessment-app</code></pre>
+
+                    <h3>3. Install Dependencies</h3>
+                    <pre><code>npm install</code></pre>
+
+                    <h3>4. Configure Environment</h3>
+                    <p>Create a .env file with the following configuration:</p>
+                    <pre><code>NODE_ENV=production
+PORT=3000
+DATABASE_URL=postgresql://user:password@localhost:5432/abet_db
+REDIS_URL=redis://localhost:6379
+JWT_SECRET=your-secret-key
+ADMIN_EMAIL=admin@institution.edu</code></pre>
+
+                    <h3>5. Initialize the Database</h3>
+                    <pre><code>npm run db:migrate
+npm run db:seed</code></pre>
+
+                    <h3>6. Build for Production</h3>
+                    <pre><code>npm run build</code></pre>
+
+                    <h3>7. Start the Application</h3>
+                    <pre><code>npm start</code></pre>
+                </section>
+
+                <section>
+                    <h2>Docker Deployment</h2>
+
+                    <h3>Using Docker Compose</h3>
+                    <p>The application includes a docker-compose.yml file for easy deployment:</p>
+                    <pre><code>docker-compose up -d</code></pre>
+
+                    <h3>Building a Custom Docker Image</h3>
+                    <pre><code>docker build -t abet-assessment:latest .
+docker run -d -p 443:3000 \
+  -e DATABASE_URL=postgresql://user:pass@db:5432/abet \
+  -e REDIS_URL=redis://redis:6379 \
+  abet-assessment:latest</code></pre>
+                </section>
+
+                <section>
+                    <h2>SSL/TLS Configuration</h2>
+
+                    <h3>Using Let's Encrypt with Nginx</h3>
+                    <ol>
+                        <li>Install Certbot:
+                            <pre><code>sudo apt install certbot python3-certbot-nginx</code></pre>
+                        </li>
+                        <li>Obtain certificate:
+                            <pre><code>sudo certbot certonly --nginx -d abet-assessment.institution.edu</code></pre>
+                        </li>
+                        <li>Configure Nginx to use the certificate</li>
+                        <li>Set up auto-renewal:
+                            <pre><code>sudo systemctl enable certbot.timer</code></pre>
+                        </li>
+                    </ol>
+                </section>
+
+                <section>
+                    <h2>Database Backup</h2>
+
+                    <h3>Backup Procedure</h3>
+                    <pre><code>pg_dump -U postgres abet_db > backup_$(date +%Y%m%d).sql</code></pre>
+
+                    <h3>Restore Procedure</h3>
+                    <pre><code>psql -U postgres abet_db < backup_YYYYMMDD.sql</code></pre>
+
+                    <h3>Automated Backups</h3>
+                    <p>Add to crontab to run daily backups at 2 AM:</p>
+                    <pre><code>0 2 * * * pg_dump -U postgres abet_db > /backups/backup_$(date +\%Y\%m\%d).sql</code></pre>
+                </section>
+
+                <section>
+                    <h2>Monitoring and Maintenance</h2>
+
+                    <h3>Application Logs</h3>
+                    <p>Monitor application logs using:</p>
+                    <pre><code>tail -f logs/app.log</code></pre>
+
+                    <h3>Health Check</h3>
+                    <p>Monitor application health at:</p>
+                    <pre><code>GET /health</code></pre>
+
+                    <h3>Database Maintenance</h3>
+                    <ul>
+                        <li>Run VACUUM regularly</li>
+                        <li>Monitor disk space</li>
+                        <li>Archive old logs</li>
+                        <li>Check connection limits</li>
+                    </ul>
+
+                    <h3>Performance Monitoring</h3>
+                    <p>Use tools like:</p>
+                    <ul>
+                        <li>New Relic</li>
+                        <li>DataDog</li>
+                        <li>Prometheus</li>
+                        <li>Grafana</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Troubleshooting</h2>
+
+                    <h3>Common Issues</h3>
+                    <ul>
+                        <li><strong>Port Already in Use:</strong> Change PORT in .env or kill the process using port 3000</li>
+                        <li><strong>Database Connection Failed:</strong> Verify DATABASE_URL and ensure PostgreSQL is running</li>
+                        <li><strong>Out of Memory:</strong> Increase server RAM or configure Node.js memory limits</li>
+                        <li><strong>Slow Performance:</strong> Check database indexes and Redis cache status</li>
+                    </ul>
+
+                    <h3>Log Files</h3>
+                    <p>Check logs at:</p>
+                    <ul>
+                        <li>Application logs: logs/app.log</li>
+                        <li>Error logs: logs/error.log</li>
+                        <li>Database logs: /var/log/postgresql/</li>
+                    </ul>
+                </section>
+
+                <section class="nav-links-section">
+                    <a href="api-reference.html" class="prev-link">← Previous: API Reference</a>
+                </section>
+            </article>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 ABET Assessment Application. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="../index.html">Home</a>
+                <a href="../index.html#docs">Documentation</a>
+                <a href="../index.html#faq">FAQ</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
