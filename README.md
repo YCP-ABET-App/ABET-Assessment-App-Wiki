@@ -1,0 +1,1 @@
+The static documentation site for the ABET Assessment application
