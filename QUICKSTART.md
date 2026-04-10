@@ -147,8 +147,8 @@ See LICENSE file for details.
 ## 🔗 Links
 
 - [Full Documentation](src/README.md)
-- [Getting Started Guide](src/docs/install-instructions.html)
-- [Deployment Guide](src/docs/deployment.html)
+- [Getting Started Guide](docs/install-instructions.html)
+- [Deployment Guide](docs/deployment.html)
 
 ---
 
