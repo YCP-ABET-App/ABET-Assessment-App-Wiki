@@ -93,23 +93,30 @@
                             <li>sudo apt install openjdk-jdk -- <strong>Install java dependency</strong></li>
                             <li>sudo apt install nodejs npm -- <strong>Install node dependencys</strong></li>
                         </ul>
+                        <li>Then we want to be in the highest level of the file system, so type <strong>cd ..</strong> until all the high-level folders appear when you type <strong>ls</strong></li>
+                        <li>Type the following command: <strong>git clone https://github.com/yourusername/your-fullstack-repo.git /opt/myapp</strong></li>
+                        <ul>
+                            <li>This command clones the repository for the ABET application</li>
+                            <li>Then type <strong>cd /opt/myapp</strong></li>
+                        </ul>
+                        <li>The repository is now cloned on the droplet!</li>
                     </ol>
                 </section>
 
                 <section>
-                    <h2>Step 4: Add Assessment Data</h2>
-                    <p>Once your assessment is created, you can:</p>
+                    <h2>Step 4: Running the application</h2>
+                    <p>Once the repository is cloned, we now are ready to start it:</p>
                     <ul>
-                        <li>Add assessment criteria</li>
-                        <li>Import student data</li>
-                        <li>Create evaluation rubrics</li>
-                        <li>Assign evaluators</li>
+                        <li>We should be in the folder <strong>/myapp</strong> where we cloned the repository</li>
+                        <li>Run the command: <strong>docker compose up -d --build</strong>, this runs the application in your droplet and sets it to be connectable on port 3000</li>
+                        <li>Once finished running (this may take a few minutes), copy your port's IPv4 address into the browser with port 3000, ex. {your_droplet_ipv4_addr}:3000</li>
+                        <li>You should now be on the login screen for the ABET application !</li>
                     </ul>
                 </section>
 
                 <section>
-                    <h2>Getting Help</h2>
-                    <p>If you encounter any issues, refer to:</p>
+                    <h2>WIP</h2>
+                    <p>WIP</p>
                     <ul>
                         <li>The <a href="user-guide.html">User Guide</a> for detailed instructions</li>
                         <li>The <a href="../index.html#faq">FAQ section</a> for common questions</li>
