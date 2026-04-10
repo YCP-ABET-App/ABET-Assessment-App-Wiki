@@ -24,7 +24,7 @@
 
     <div class="breadcrumb">
         <div class="container">
-            <a href="../index.html">Home</a> / <span>Getting Started</span>
+            <a href="../index.html">Home</a> / <span>Install Instructions</span>
         </div>
     </div>
 
@@ -41,36 +41,50 @@
                 <section>
                     <h2>Prerequisites</h2>
                     <ul>
-                        <li>A valid user account (provided by your institution)</li>
-                        <li>A modern web browser (Chrome, Firefox, Safari, or Edge)</li>
-                        <li>Stable internet connection</li>
+                        <li>A Digital Ocean droplet with at least 2GB of memory and 50GB of storage</li>
+                        <li>A GitHub account</li>
                     </ul>
                 </section>
 
                 <section>
-                    <h2>Step 1: Login</h2>
-                    <p>Navigate to the application home page and enter your credentials. You will receive login information from your system administrator.</p>
+                    <h2>Step 1: Setup Droplet</h2>
+                    <p>Navigate to <a href="digitalocean.com">Digital Ocean's website</a> and click 'login' in the top right.</p>
+                    <p>Once logged in, we now should be on the projects page and now we'll create the droplet:</p>
                     <ol>
-                        <li>Open the application URL in your browser</li>
-                        <li>Enter your username</li>
-                        <li>Enter your password</li>
-                        <li>Click "Login"</li>
+                        <li>Click on 'Droplets' on the left hand side</li>
+                        <li>Then click 'Create Droplet' in the top right</li>
+                        <li>Select a region and datacenter that is closest to where your userbase will be</li>
+                        <li>For operating system, we'll choose Ubuntu 25.04</li>
+                        <li>For the plan, the minimum that we recommend is the $12/mo plan which has 2GB of memory and 50GB of storage</li>
+                        <li>Add additional storage or automatic backups if you like</li>
+                        <li>We can skip over the SSH keys for now</li>
+                        <li>Give the droplet a name and tags if you choose, and then hit 'Create Droplet'</li>
                     </ol>
                 </section>
 
                 <section>
-                    <h2>Step 2: Navigate the Dashboard</h2>
-                    <p>After logging in, you'll see the main dashboard. The dashboard contains:</p>
+                    <h2>Step 2: Setting up the firewall</h2>
+                    <p>Once your droplet is created, we'll now need to add firewall rules so your institution can connect to the application:</p>
                     <ul>
-                        <li><strong>Navigation Menu:</strong> Quick access to main features</li>
-                        <li><strong>Recent Items:</strong> Quick links to recently accessed assessments</li>
-                        <li><strong>Status Overview:</strong> Current assessment status at a glance</li>
+                        <li>In the administrator panel of you droplet on Digital Ocean's website, click the 'Networking' button</li>
+                        <li>Here, scroll down to the section 'Firewalls', here we'll need to add some special rules</li>
+                        <li>Click button under the 'Firewalls' header to open the firewall rules</li>
+                        <li>The resulting page may not immediately show all the rules, if so navigate to the 'droplets' tab then back to 'rules'</li>
+                        <li>Here, we need to ensure that we have five <strong>Inbound</strong> rules:</li>
+                        <ol>
+                            <li>SSH: TCP port 22, source: your IP address (for server management)</li>
+                            <li>HTTPS: TCP port 443, source: All IPv4 and IPv6</li>
+                            <li>Custom: TCP port 3000, source: All IPv4 and IPv6 (access to the web application through the browser)</li>
+                            <li>Custom: TCP port 8080, source: All IPv4 and IPv6</li>
+                            <li>Custom: TCP port 8081, source: All IPv4 and IPv6</li>
+                        </ol>
+                        <li>Once these are created, now we can move on to adding the dependencies in our droplet.</li>
                     </ul>
                 </section>
 
                 <section>
-                    <h2>Step 3: Create Your First Assessment</h2>
-                    <p>To create a new assessment:</p>
+                    <h2>Step 3: Downloading the project</h2>
+                    <p>Now that we've added our firewall rules, we can go to the 'Access' tab and launch our droplet's console:</p>
                     <ol>
                         <li>Click "New Assessment" on the dashboard</li>
                         <li>Fill in the assessment details</li>
