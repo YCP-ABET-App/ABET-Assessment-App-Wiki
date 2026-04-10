@@ -17,8 +17,8 @@
     "web-application"
   ],
   "scripts": {
-    "start": "http-server src -p 8000",
-    "serve": "http-server src",
+    "start": "http-server -p 8000",
+    "serve": "http-server",
     "build": "echo 'This is a static site. No build needed.'",
     "test": "echo 'No tests configured'"
   },
@@ -32,8 +32,8 @@
     "not dead"
   ],
   "author_info": {
-    "name": "Your Name",
-    "email": "your-email@institution.edu",
-    "organization": "Your Organization"
+    "name": "Emmet Larson",
+    "email": "elarson2@ycp.edu",
+    "organization": "YCP ABET Capstone Spring 2026"
   }
 }

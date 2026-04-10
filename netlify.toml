@@ -1,9 +1,12 @@
 # Netlify configuration for static site deployment
 
+# Only redirect routes that don't match actual files (for SPA-like behavior on root routes)
+# This prevents redirecting actual file requests like /docs/*.html
 [[redirects]]
-  from = "/*"
+  from = "/"
   to = "/index.html"
   status = 200
+  force = true
 
 # Cache settings
 [[headers]]

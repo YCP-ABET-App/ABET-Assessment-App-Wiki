@@ -86,10 +86,13 @@
                     <h2>Step 3: Downloading the project</h2>
                     <p>Now that we've added our firewall rules, we can go to the 'Access' tab and launch our droplet's console:</p>
                     <ol>
-                        <li>Click "New Assessment" on the dashboard</li>
-                        <li>Fill in the assessment details</li>
-                        <li>Select the relevant program and year</li>
-                        <li>Click "Create"</li>
+                        <li>Once logged into the droplet, run the following commands:</li>
+                        <ul>
+                            <li>sudo apt update -- <strong>Update current package list</strong></li>
+                            <li>sudo apt install git -- <strong>Install git CLI</strong></li>
+                            <li>sudo apt install openjdk-jdk -- <strong>Install java dependency</strong></li>
+                            <li>sudo apt install nodejs npm -- <strong>Install node dependencys</strong></li>
+                        </ul>
                     </ol>
                 </section>
 
