@@ -157,6 +157,75 @@ article > section:first-of-type ul a {
     padding: 0.3rem 0;
 }
 
+ /* Terminology Guide Styles */
+
+/* Intro Section */
+.intro-section {
+    background: linear-gradient(135deg, #f0f4f8 0%, #e8f1f7 100%);
+    padding: 2rem;
+    border-radius: 8px;
+    border-left: 5px solid var(--secondary-color);
+    margin-bottom: 2rem;
+}
+
+.intro-section p {
+    margin-bottom: 1rem;
+}
+
+/* Term Card Styling */
+.term-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.term-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.term-card h3 {
+    color: var(--primary-color);
+    margin-top: 0;
+    padding-top: 0;
+    font-size: 1.4rem;
+}
+
+.term-card p {
+    margin-bottom: 0.8rem;
+}
+
+.term-card p:last-child {
+    margin-bottom: 0;
+}
+
+/* Feature Highlight Styling */
+.feature-highlight {
+    background-color: #f0f8ff;
+    border-left: 5px solid var(--secondary-color);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0 8px 8px 0;
+}
+
+.feature-highlight h3 {
+    color: var(--primary-color);
+    margin-top: 0;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.feature-highlight p {
+    margin-bottom: 0;
+    color: #333;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     article h1 {
@@ -185,6 +254,26 @@ article > section:first-of-type ul a {
         width: 100%;
         text-align: center;
     }
+
+    .term-card {
+        padding: 1.2rem;
+    }
+
+    .term-card h3 {
+        font-size: 1.2rem;
+    }
+
+    .feature-highlight {
+        padding: 1.2rem;
+    }
+
+    .feature-highlight h3 {
+        font-size: 1.1rem;
+    }
+
+    .intro-section {
+        padding: 1.5rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -211,5 +300,26 @@ article > section:first-of-type ul a {
 
     .api-endpoint {
         padding: 1rem;
+    }
+
+    .term-card {
+        padding: 1rem;
+    }
+
+    .term-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .feature-highlight {
+        padding: 1rem;
+    }
+
+    .feature-highlight h3 {
+        font-size: 1rem;
+    }
+
+    .intro-section {
+        padding: 1rem;
+        border-left: 3px solid var(--secondary-color);
     }
 }
